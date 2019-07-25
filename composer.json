@@ -1,0 +1,27 @@
+{
+  "name": "api-video/statuspage-php",
+  "description": "StatusPage.io client by api.video",
+  "prefer-stable": true,
+  "license": "MIT",
+  "type": "library",
+  "authors": [
+    {
+      "name": "Keven Godet",
+      "email": "keven@libcast.com",
+      "role": "Developer"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "ApiVideo\\StatusPage\\": "src"
+    }
+  },
+  "require": {
+    "php": ">=5.4",
+    "ext-json": "*",
+    "kriswallsmith/buzz": "^0.15"
+  },
+  "require-dev": {
+    "roave/security-advisories": "dev-master"
+  }
+}
