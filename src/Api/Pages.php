@@ -2,14 +2,17 @@
 
 namespace ApiVideo\StatusPage\Api;
 
+use ApiVideo\StatusPage\Model\Status;
 use ApiVideo\StatusPage\Traits\Marshal;
+use ApiVideo\StatusPage\Traits\Throwing;
+use ApiVideo\StatusPage\Traits\LastError;
 use ApiVideo\StatusPage\Model\Page;
 use IteratorAggregate;
 use Buzz\Browser;
 
 final class Pages implements IteratorAggregate
 {
-    use Marshal;
+    use Marshal, LastError, Throwing;
 
     /** @var Browser */
     private $browser;
@@ -17,6 +20,22 @@ final class Pages implements IteratorAggregate
     public function __construct(Browser $browser)
     {
         $this->browser = $browser;
+    }
+
+    /**
+     * @param string $pageId
+     * @return Status
+     * @throws \Exception
+     */
+    public function getOverallStatus($pageId)
+    {
+        $response = $this->browser->get(sprintf('/pages/%s/status.json', $pageId));
+
+        $this->ensureSuccessfulResponse($response, 'Retrieve metric status', 'Page '.$pageId);
+
+        $body = json_decode($response->getContent(), true);
+
+        return Status::fromArray($body['status']);
     }
 
     public function create(array $data)

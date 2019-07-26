@@ -63,6 +63,7 @@ final class Page
     {
         $this->data = $data;
     }
+
     /**
      * @param array $data
      * @return Page
