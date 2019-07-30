@@ -76,7 +76,7 @@ final class Components implements IteratorAggregate
     }
 
     /**
-     * @param string $id
+     * @param string $componentId
      * @param string $status
      * @return Component
      * @throws Forbidden
@@ -84,9 +84,9 @@ final class Components implements IteratorAggregate
      * @throws Unauthorized
      * @throws Exception
      */
-    public function setStatus($id, $status)
+    public function setStatus($componentId, $status)
     {
-        return $this->update($id, ['status' => $status]);
+        return $this->update($componentId, ['status' => $status]);
     }
 
     /**
