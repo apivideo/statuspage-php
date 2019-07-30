@@ -7,6 +7,7 @@ use ApiVideo\StatusPage\Buzz\BaseUriListener;
 use ApiVideo\StatusPage\Api\Pages;
 use ApiVideo\StatusPage\Api\Components;
 use ApiVideo\StatusPage\Api\Metrics;
+use ApiVideo\StatusPage\Model\GlobalStatus;
 use Buzz\Client\ClientInterface;
 use Buzz\Message\Factory\Factory;
 use Buzz\Message\Factory\FactoryInterface;
@@ -19,6 +20,7 @@ use InvalidArgumentException, UnexpectedValueException;
  * @property-read Pages $pages
  * @property-read Components $components
  * @property-read Metrics $metrics
+ * @method GlobalStatus getOverallStatus()
  */
 final class Client
 {
@@ -110,6 +112,15 @@ final class Client
         }
 
         return $this->defaultPageId = reset($pages)->id;
+    }
+
+    /**
+     * @return GlobalStatus
+     * @throws \Exception
+     */
+    public function getOverallStatus()
+    {
+        return $this->pages->getOverallStatus($this->getDefaultPageId());
     }
 
     public function __get($name)

@@ -3,16 +3,22 @@
 namespace ApiVideo\StatusPage\Model;
 
 use ApiVideo\StatusPage\Traits\Getter;
-use DateTimeImmutable;
 use Exception;
 
 /**
  * @property-read string $description
  * @property-read string $indicator
  */
-final class Status
+final class GlobalStatus
 {
     use Getter;
+
+    const
+        NONE     = 'none',
+        MINOR    = 'minor',
+        MAJOR    = 'major',
+        CRITICAL = 'critical'
+    ;
 
     /** @var array */
     private $data;
@@ -24,14 +30,11 @@ final class Status
 
     /**
      * @param array $data
-     * @return Status
+     * @return GlobalStatus
      * @throws Exception
      */
     public static function fromArray(array $data)
     {
-        return new Status(array_merge($data, [
-            'description'   => isset($data['description']) ? new DateTimeImmutable($data['description']) : null,
-            'indicator'     => isset($data['indicator']) ? new DateTimeImmutable($data['indicator']) : null,
-        ]));
+        return new self($data);
     }
 }

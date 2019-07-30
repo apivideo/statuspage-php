@@ -25,8 +25,10 @@ class BaseUriListener implements ListenerInterface
 
     public function preSend(RequestInterface $request)
     {
-        $request->setResource(str_replace('//', '/', $this->resourcePrefix.$request->getResource()));
-        $request->setHost($this->host);
+        if (!$request->getHost()) {
+            $request->setResource(str_replace('//', '/', $this->resourcePrefix . $request->getResource()));
+            $request->setHost($this->host);
+        }
     }
 
     public function postSend(RequestInterface $request, MessageInterface $response)
