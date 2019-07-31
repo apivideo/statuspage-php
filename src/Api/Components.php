@@ -41,11 +41,10 @@ final class Components implements IteratorAggregate
      */
     public function create(array $data)
     {
-        $response = $this->browser->submit(
-            sprintf('/pages/%s/components.json', $this->pageId),
-            [
-                'data' => $data
-            ]
+        $response = $this->browser->post(
+            sprintf('/pages/%s/components', $this->pageId),
+            ['Content-Type: application/json'],
+            json_encode(['component' => $data])
         );
 
         $this->ensureSuccessfulResponse($response, 'Create component');
@@ -65,9 +64,9 @@ final class Components implements IteratorAggregate
     public function update($componentId, array $data)
     {
         $response = $this->browser->patch(
-            sprintf('/pages/%s/components/%s.json', $this->pageId, $componentId),
-            [],
-            $data
+            sprintf('/pages/%s/components/%s', $this->pageId, $componentId),
+            ['Content-Type: application/json'],
+            json_encode(['component' => $data])
         );
 
         $this->ensureSuccessfulResponse($response, 'Update component', 'Component '.$componentId);
